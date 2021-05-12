@@ -29,4 +29,5 @@ Route::get('/', function () {
 Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::resource('users', 'App\Http\Controllers\Admin\UserController');
+    Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
 });

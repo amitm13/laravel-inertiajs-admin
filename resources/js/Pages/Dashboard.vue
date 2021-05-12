@@ -6,10 +6,15 @@
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="py-12 flex">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex-initial">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <welcome :users="users" />
+                    <inertia-link href="/users">
+                        <div class="p-3 m-3">
+                            <span class="font-bold">Total User:</span>
+                            <span class="bg-gray-800 px-2 text-white rounded m-3">{{ (users_count) ? users_count : 0 }}</span>
+                        </div>
+                    </inertia-link>
                 </div>
             </div>
         </div>
@@ -26,7 +31,7 @@
             Welcome,
         },
         props:{
-            users: Array
+            users_count: Number
         }
     }
 </script>

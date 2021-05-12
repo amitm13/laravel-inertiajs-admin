@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Models\User;
 use App\Models\Role;
-use DB;
+use Inertia\Inertia;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['users'] = User::all();
-        return Inertia::render('Users/Index', $data);
+        $roles = Role::all();
+        return Inertia::render('Role/Index',['roles'=>$roles]);
     }
 
     /**
@@ -29,8 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $data['Roles'] = Role::all();
-        return Inertia::render('Users/Create',$data);
+        return Inertia::render('Role/Create');
     }
 
     /**
@@ -42,22 +39,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'role_id' => 'required',
+            'title'=>'required|min:3'
         ]);
 
-        $request['password'] = bcrypt($request->password);
-
-        $User = User::create($request->all());
-
-        if($request->role_id){
-            if(DB::table('role_user')->where(['user_id'=>$User->id])->count() == 0){
-                DB::table('role_user')->insert(['role_id'=>$request->role_id,'user_id'=>$User->id]);   
-            }
-        }
-        return redirect()->route('dashboard');
+        Role::create($request->all());
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -79,9 +65,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $User = User::findOrFail($id);
-        return Inertia::render('Users/Edit', ['User'=>$User]);
-
+        $Role = Role::findOrFail($id);
+        return Inertia::render('Role/Edit',['Role'=>$Role]);
     }
 
     /**
@@ -93,21 +78,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $Role = Role::findOrFail($id);
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            'title'=>'required|min:3'
         ]);
 
-        $User = User::findOrFail($id);
-
-        if($request->password){
-            $request['password'] = bcrypt($request->password);
-            $User->update($request->all());
-        }else{
-            $User->update($request->except('password'));
-        }
-
-        return redirect()->route('users.index');
+        $Role->update($request->all());
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -118,7 +95,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
-        return redirect()->route('users.index');
+        Role::destroy($id);
+        return redirect()->route('roles.index');
     }
 }
