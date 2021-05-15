@@ -25,9 +25,14 @@
                             <jet-label for="password" value="Password" />
                             <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" />
                         </div>
-
+                        <div class="mt-4">
+                            <jet-label for="role_id" value="Role" />
+                            <select name="role_id" id="role_id" v-model="form.role_id" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                                <option v-for="role in Roles" :key="role.id" :value="role.id" >{{role.title}}</option>
+                            </select>
+                        </div>
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create User
+                            Save
                         </jet-button>
                     </form>
                 </div>
@@ -53,6 +58,7 @@
         },
         props:{
             User: Object,
+            Roles: Array,
         },
         data() {
             return {
@@ -60,6 +66,7 @@
                     name: this.User.name,
                     password: '',
                     email: this.User.email,
+                    role_id: this.User.role_id,
                 })
             }
         },

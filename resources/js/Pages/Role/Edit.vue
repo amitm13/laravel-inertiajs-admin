@@ -19,7 +19,7 @@
                         </div>
 
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Update Role
+                            Save
                         </jet-button>
                     </form>
                 </div>

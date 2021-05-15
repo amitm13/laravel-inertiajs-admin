@@ -33,7 +33,7 @@
                             </select>
                         </div>
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create User
+                            Save
                         </jet-button>
                     </form>
                 </div>

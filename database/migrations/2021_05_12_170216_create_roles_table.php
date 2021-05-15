@@ -18,13 +18,6 @@ class CreateRolesTable extends Migration
             $table->string('title');
             $table->timestamps();
         });
-
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->id();
-            $table->integer('role_id');
-            $table->integer('user_id');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -35,6 +28,5 @@ class CreateRolesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('roles');
-        Schema::dropIfExists('role_user');
     }
 }

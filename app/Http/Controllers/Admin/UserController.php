@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['users'] = User::all();
+        $data['users'] = User::with('Role')->get();
         return Inertia::render('Users/Index', $data);
     }
 
@@ -51,12 +51,6 @@ class UserController extends Controller
         $request['password'] = bcrypt($request->password);
 
         $User = User::create($request->all());
-
-        if($request->role_id){
-            if(DB::table('role_user')->where(['user_id'=>$User->id])->count() == 0){
-                DB::table('role_user')->insert(['role_id'=>$request->role_id,'user_id'=>$User->id]);   
-            }
-        }
         return redirect()->route('dashboard');
     }
 
@@ -79,8 +73,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $User = User::findOrFail($id);
-        return Inertia::render('Users/Edit', ['User'=>$User]);
+        $data['User'] = User::findOrFail($id);
+        $data['Roles'] = Role::all();
+        return Inertia::render('Users/Edit', $data);
 
     }
 
