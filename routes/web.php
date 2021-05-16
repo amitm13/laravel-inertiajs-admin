@@ -30,4 +30,6 @@ Route::group(['middleware'=>['auth:sanctum', 'verified']], function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::resource('users', 'App\Http\Controllers\Admin\UserController');
     Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
+    Route::resource('categories', 'App\Http\Controllers\Admin\CategoryController');
+    Route::resource('posts', 'App\Http\Controllers\Admin\PostController');
 });

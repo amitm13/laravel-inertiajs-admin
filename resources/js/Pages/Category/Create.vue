@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Add Role
+                Add Category
             </h2>
         </template>
 
@@ -58,7 +58,7 @@
                     .transform(data => ({
                         ... data,
                     }))
-                    .post(this.route('roles.store'), {
+                    .post(this.route('categories.store'), {
                     })
             }
         }

@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Add Role
+                Add User
             </h2>
         </template>
 
@@ -14,8 +14,22 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <form @submit.prevent="submit">
                         <div>
-                            <jet-label for="title" value="Title" />
-                            <jet-input id="title" type="text" class="mt-1 block w-full" v-model="form.title" required autofocus />
+                            <jet-label for="name" value="Name" />
+                            <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus />
+                        </div>
+                        <div class="mt-4">
+                            <jet-label for="email" value="Email" />
+                            <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
+                        </div>
+                        <div class="mt-4">
+                            <jet-label for="password" value="Password" />
+                            <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" />
+                        </div>
+                        <div class="mt-4">
+                            <jet-label for="role_id" value="Role" />
+                            <select name="role_id" id="role_id" v-model="form.role_id" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
+                                <option v-for="role in Roles" :key="role.id" :value="role.id" >{{role.title}}</option>
+                            </select>
                         </div>
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Save
@@ -43,11 +57,16 @@
             JetValidationErrors,
         },
         props:{
+            User: Object,
+            Roles: Array,
         },
         data() {
             return {
                 form: this.$inertia.form({
-                    title: ''
+                    name: this.User.name,
+                    password: '',
+                    email: this.User.email,
+                    role_id: this.User.role_id,
                 })
             }
         },
@@ -58,7 +77,8 @@
                     .transform(data => ({
                         ... data,
                     }))
-                    .post(this.route('roles.store'), {
+                    .patch(this.route('users.update', this.User.id), {
+                        onFinish: () => this.form.reset('password'),
                     })
             }
         }

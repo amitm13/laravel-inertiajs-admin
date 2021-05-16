@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Add Role
+                Update Category
             </h2>
         </template>
 
@@ -17,6 +17,7 @@
                             <jet-label for="title" value="Title" />
                             <jet-input id="title" type="text" class="mt-1 block w-full" v-model="form.title" required autofocus />
                         </div>
+
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Save
                         </jet-button>
@@ -43,11 +44,12 @@
             JetValidationErrors,
         },
         props:{
+            Category: Object,
         },
         data() {
             return {
                 form: this.$inertia.form({
-                    title: ''
+                    title: this.Category.title,
                 })
             }
         },
@@ -58,7 +60,7 @@
                     .transform(data => ({
                         ... data,
                     }))
-                    .post(this.route('roles.store'), {
+                    .patch(this.route('categories.update', this.Category.id), {
                     })
             }
         }
