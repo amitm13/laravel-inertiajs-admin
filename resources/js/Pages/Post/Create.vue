@@ -29,13 +29,34 @@
                         </div>
                         <div class="mt-4">
                             <jet-label for="image" value="Image" />
-                            <input type="file" accept="image/*" @input="form.image = $event.target.files[0]" id="image">
+                            <input type="file" accept="image/*" @input="form.image_file = $event.target.files[0]" id="image">
                         </div>
-
+                        <div class="mt-4">
+                            <jet-label for="short_description" value="Short description" />
+                            <jet-input id="short_description" type="text" class="mt-1 block w-full" v-model="form.sort_description" required autofocus />
+                        </div>
                         <div class="mt-4">
                             <jet-label for="description" value="Body" />
                             <textarea v-model="form.description" name="description" id="description" rows="10" class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
                         </div>
+                        <label 
+                            for="is_featured"
+                            class="flex items-center cursor-pointer"
+                        >
+                            <!-- toggle -->
+                            <div class="relative">
+                            <!-- input -->
+                            <input id="is_featured" v-model="form.is_featured" type="checkbox" class="sr-only" />
+                            <!-- line -->
+                            <div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+                            <!-- dot -->
+                            <div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+                            </div>
+                            <!-- label -->
+                            <div class="ml-3 text-gray-700 font-medium">
+                            Is Featured
+                            </div>
+                        </label>
                         <jet-button class="ml-4 mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                             Save
                         </jet-button>
@@ -45,7 +66,19 @@
         </div>
     </app-layout>
 </template>
+<style>
+/* Toggle A */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
 
+/* Toggle B */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+</style>
 <script>
     import AppLayout from '@/Layouts/AppLayout'
     import JetInput from '@/Jetstream/Input'
@@ -70,9 +103,11 @@
                 form: this.$inertia.form({
                     title: '',
                     slug: '',
-                    image: '',
+                    image_file: '',
                     category_id: '',
                     description: '',
+                    sort_description: '',
+                    is_featured: '',
                 })
             }
         },

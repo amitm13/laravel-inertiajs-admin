@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
@@ -95,6 +97,8 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::destroy($id);
+        Storage::delete(Post::where('category_id', $id)->pluck('image')->toArray());
+        Post::where('category_id', $id)->delete();
         return redirect()->route('categories.index');
     }
 }

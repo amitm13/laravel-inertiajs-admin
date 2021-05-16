@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data['Posts'] = Post::all();
+        $data['Posts'] = Post::with('Category')->get();
         return Inertia::render('Post/Index', $data); 
     }
 
@@ -47,8 +47,12 @@ class PostController extends Controller
             'description'=>'required'
         ]);
 
-        if ($request->hasFile('image')) {
-            $request['image'] = $request->file('image')->store('posts');
+        if ($request->hasFile('image_file')) {
+            $request['image'] = $request->file('image_file')->store('posts');
+        }
+
+        if (empty($request->is_featured)) {
+            $request['is_featured'] = 0;
         }
 
         Post::create($request->all());
@@ -95,11 +99,11 @@ class PostController extends Controller
         ]);
         $Post = Post::find($id);
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image_file')) {
             if ($Post->image) {
                 Storage::delete($Post->image);
             }    
-            $request['image'] = $request->file('image')->store('posts');
+            $request['image'] = $request->file('image_file')->store('posts');
         }
 
         $Post->update($request->all());
