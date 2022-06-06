@@ -25,7 +25,7 @@
                     </inertia-link>
                 </div>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg float-left ml-4">
-                    <inertia-link href="/roles">
+                    <inertia-link href="/categories">
                         <div class="p-3 m-3">
                             <span class="font-bold">Total Categories:</span>
                             <span class="bg-gray-800 px-2 text-white rounded m-3">{{ (categories_count) ? categories_count : 0 }}</span>
@@ -33,7 +33,7 @@
                     </inertia-link>
                 </div>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg float-left ml-4">
-                    <inertia-link href="/roles">
+                    <inertia-link href="/posts">
                         <div class="p-3 m-3">
                             <span class="font-bold">Total Posts:</span>
                             <span class="bg-gray-800 px-2 text-white rounded m-3">{{ (posts_count) ? posts_count : 0 }}</span>
